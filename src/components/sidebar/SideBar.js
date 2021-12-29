@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context/AppContext";
 import Item from "./Item";
 
@@ -9,21 +8,20 @@ const SideBar = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setRenderList(mapData);
+    if (mapData) {
+      setRenderList(mapData);
+    }
   }, [mapData]);
 
   const handleChange = (e) => {
-    setSearch(e.target.value);
-
     if (e.target.value) {
+      setSearch(e.target.value);
       const tempList = mapData.filter((country) =>
         country.country.toLowerCase().match(`.*${e.target.value}.*.`)
       );
-
       setRenderList(tempList);
       return;
     }
-
     setRenderList(mapData);
   };
 

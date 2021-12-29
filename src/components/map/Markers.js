@@ -19,7 +19,10 @@ const Markers = () => {
           });
           return (
             <Marker
-              position={[markData.countryInfo.lat, markData.countryInfo.long]}
+              position={[
+                markData.countryInfo.lat || 0,
+                markData.countryInfo.long || 0,
+              ]}
               key={markData.country}
               icon={customeIcon}
             >
