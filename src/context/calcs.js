@@ -58,22 +58,31 @@ export const getLastMonthData = async (setLastMonthData) => {
 export const calcLastMonthData = (
   lastMonthData,
   setLastMonthCases,
-  setLastMonthDeaths,
-  startDate,
-  todayDate
+  setLastMonthDeaths
 ) => {
-  if (lastMonthData.length == 0) return;
+  if (Object.keys(lastMonthData).length == 0) return;
+
+  const keys = getFirstAndLastKeyOfObject(lastMonthData.cases);
+
   const calcLastMonthCases = minusByBiggervalue(
-    lastMonthData.cases[startDate],
-    lastMonthData.cases[todayDate]
+    lastMonthData.cases[keys[0]],
+    lastMonthData.cases[keys[1]]
   );
 
   const calcLastMonthDeaths = minusByBiggervalue(
-    lastMonthData.deaths[startDate],
-    lastMonthData.deaths[todayDate]
+    lastMonthData.deaths[keys[0]],
+    lastMonthData.deaths[keys[1]]
   );
+
   setLastMonthCases(calcLastMonthCases);
   setLastMonthDeaths(calcLastMonthDeaths);
+};
+
+export const getFirstAndLastKeyOfObject = (obj) => {
+  const firstElementKey = Object.keys(obj)[0];
+  const lastElementKey = Object.keys(obj)[Object.keys(obj).length - 1];
+
+  return [firstElementKey, lastElementKey];
 };
 
 export const getCountriesLastMonthData = async (setLastMonthCountriesData) => {

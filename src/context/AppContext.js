@@ -32,15 +32,9 @@ const AppContext = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    calcLastMonthData(
-      lastMonthData,
-      setLastMonthCases,
-      setLastMonthDeaths,
-      startDate,
-      todayDate
-    );
+    calcLastMonthData(lastMonthData, setLastMonthCases, setLastMonthDeaths);
     setIsLoading(false);
-  }, [lastMonthData, startDate, todayDate]);
+  }, [lastMonthData]);
 
   const contextValue = {
     mapData,

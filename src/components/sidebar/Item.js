@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context/AppContext";
-import { minusByBiggervalue } from "../../context/calcs";
+import {
+  minusByBiggervalue,
+  getFirstAndLastKeyOfObject,
+} from "../../context/calcs";
 
 const Item = ({ item }) => {
   const { startDate, todayDate, lastMonthCountriesData, setLongAndLat } =
@@ -18,17 +20,20 @@ const Item = ({ item }) => {
     if (counteryIdx == -1) {
       setNotFound(true);
     } else {
+      const keys = getFirstAndLastKeyOfObject(
+        lastMonthCountriesData[counteryIdx].timeline.cases
+      );
       setCountryLastMonthCases(
         minusByBiggervalue(
-          lastMonthCountriesData[counteryIdx].timeline.cases[startDate],
-          lastMonthCountriesData[counteryIdx].timeline.cases[todayDate]
+          lastMonthCountriesData[counteryIdx].timeline.cases[keys[0]],
+          lastMonthCountriesData[counteryIdx].timeline.cases[keys[1]]
         )
       );
 
       setCountryLastMonthDeaths(
         minusByBiggervalue(
-          lastMonthCountriesData[counteryIdx].timeline.deaths[startDate],
-          lastMonthCountriesData[counteryIdx].timeline.deaths[todayDate]
+          lastMonthCountriesData[counteryIdx].timeline.deaths[keys[0]],
+          lastMonthCountriesData[counteryIdx].timeline.deaths[keys[1]]
         )
       );
     }
