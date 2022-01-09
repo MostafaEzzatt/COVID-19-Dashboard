@@ -4,13 +4,20 @@ import Head from "next/head";
 //Components
 import TopStatus from "../components/status/TopStatus";
 import SideBar from "../components/sidebar/SideBar";
+import Error from "../components/Error";
 
 // Map
 const MyAwesomeMap = dynamic(() => import("../components/map/Map"), {
   ssr: false,
 });
 
+import { useGlobalContext } from "../context/AppContext";
+
 export default function Home() {
+  const { isLoading } = useGlobalContext();
+
+  if (isLoading.loading && isLoading.message)
+    return <Error error={isLoading.message} />;
   return (
     <div className="flex gap-1">
       <Head>

@@ -12,7 +12,8 @@ export const getDates = (setTodayDate, setStartDate) => {
 export const getCovidData = async (
   setMapData,
   setTotalCases,
-  setTotalDeaths
+  setTotalDeaths,
+  setIsLoading
 ) => {
   const fetchAPIAllCountries = await fetch(
     "https://corona.lmao.ninja/v3/covid-19/countries"
@@ -23,6 +24,7 @@ export const getCovidData = async (
     responseAllCountries = await fetchAPIAllCountries.json();
   } catch (error) {
     console.log("ERROR : ", error);
+    setIsLoading({ message: "Something Went Wrong", loading: true });
     return;
   }
   setMapData(responseAllCountries);
@@ -39,7 +41,7 @@ export const getCovidData = async (
   setTotalDeaths(formateNumber(calcTotalDeaths));
 };
 
-export const getLastMonthData = async (setLastMonthData) => {
+export const getLastMonthData = async (setLastMonthData, setIsLoading) => {
   const fetchLastMonthData = await fetch(
     "https://disease.sh/v3/covid-19/historical/all?lastdays=28"
   );
@@ -50,6 +52,7 @@ export const getLastMonthData = async (setLastMonthData) => {
     responseLastMonthData = await fetchLastMonthData.json();
   } catch (error) {
     console.log("ERROR : ", error);
+    setIsLoading({ message: "Something Went Wrong", loading: true });
   }
 
   setLastMonthData(responseLastMonthData);
@@ -85,7 +88,10 @@ export const getFirstAndLastKeyOfObject = (obj) => {
   return [firstElementKey, lastElementKey];
 };
 
-export const getCountriesLastMonthData = async (setLastMonthCountriesData) => {
+export const getCountriesLastMonthData = async (
+  setLastMonthCountriesData,
+  setIsLoading
+) => {
   const itemData = await fetch(
     `https://disease.sh/v3/covid-19/historical?lastdays=28`
   );
@@ -95,6 +101,7 @@ export const getCountriesLastMonthData = async (setLastMonthCountriesData) => {
     setLastMonthCountriesData(response);
   } catch (error) {
     console.log("ERROR : ", error);
+    setIsLoading({ message: "Something Went Wrong", loading: true });
   }
 };
 
