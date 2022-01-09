@@ -14,8 +14,8 @@ const SideBar = () => {
   }, [mapData]);
 
   const handleChange = (e) => {
+    setSearch(e.target.value);
     if (e.target.value) {
-      setSearch(e.target.value);
       const tempList = mapData.filter((country) =>
         country.country.toLowerCase().match(`.*${e.target.value}.*.`)
       );
