@@ -8,16 +8,14 @@ const SideBar = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (mapData) {
-      setRenderList(mapData);
-    }
+    setRenderList(mapData);
   }, [mapData]);
 
   const handleChange = (e) => {
-    setSearch(e.target.value);
+    setSearch(e.target.value.trim());
     if (e.target.value) {
       const tempList = mapData.filter((country) =>
-        country.country.toLowerCase().match(`.*${e.target.value}.*.`)
+        country.country.toLowerCase().match(`.*${e.target.value}.*`)
       );
       setRenderList(tempList);
       return;

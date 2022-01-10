@@ -18,6 +18,9 @@ export default function Home() {
 
   if (isLoading.loading && isLoading.message)
     return <Error error={isLoading.message} />;
+
+  if (isLoading.loading) return "Loading";
+
   return (
     <div className="flex gap-1">
       <Head>
